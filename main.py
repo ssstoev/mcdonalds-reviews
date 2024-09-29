@@ -43,7 +43,7 @@ def update_graph(selected_state):
         size='rating_count',  # Bubble size based on the number of reviews
         hover_name='city',
         title=f'Cities in {selected_state}',
-        labels={'rating (stars)': 'Average Rating (Stars)', 'rating_count': 'Average Count of Reviews'},
+        labels={'rating (stars)': 'Average Rating (Stars)', 'rating_count': 'Average Count of Reviews in City'},
         color='city'  # Different color per city
     )
     
