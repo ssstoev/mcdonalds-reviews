@@ -1,46 +1,62 @@
-'''In this file we create an interactive map which displays the stores across the US map
-    and it includes a popup functionality to view info about the specific stores.'''
-
-
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
 import pandas as pd
-import folium 
-from folium import plugins
-import matplotlib
-import matplotlib.pyplot as plt
+import plotly.express as px
 
-data = pd.read_csv("McDonald_s_Reviews.csv", encoding='ISO-8859-1')
-data.dropna(inplace=True)
-m = folium.Map(location=[data["latitude "].mean(), data["longitude"].mean()], zoom_start=6)
+df = pd.read_csv("pivoted_data.csv")
 
-nr_ratings_min, nr_ratings_max = data["rating_count"].min(), data["rating_count"].max()
+# Initialize the Dash app
+app = dash.Dash(__name__)
 
-# Normalize ratings_count to use for color mapping
-norm = plt.Normalize(data['rating_count'].min(), data['rating_count'].max())
-# Create a colormap
-cmap = plt.cm.get_cmap('RdYlGn')
-
-for _, row in data.iterrows():
-
-    popup_info = f''''Rating for store {row["rating"]} <br>
-    Number of ratings for store: {row["rating_count"]}
-    '''
-    # Normalize the rating and map to a color
-    normalized_value = norm(row['rating_count'])
-    color = cmap(normalized_value)
+# App layout
+app.layout = html.Div([
+    html.H1("Average Rating and Review Count by City"),
     
-    # Convert the RGBA color to hex for folium
-    hex_color = matplotlib.colors.rgb2hex(color)
+    # Dropdown for selecting the state
+    dcc.Dropdown(
+        id='state-dropdown',
+        options=[{'label': state, 'value': state} for state in df['state'].unique()],
+        value=df['state'].unique()[0],  # Set default value
+        clearable=False,
+        style={'width': '50%'}
+    ),
+    
+    # Graph to display
+    dcc.Graph(id='city-rating-graph')
+])
 
-    folium.CircleMarker(
-        location=[row["latitude "], row["longitude"]],
-        radius=10,
-        color=hex_color,
-        fill=True,
-        fill_Color=hex_color,
-        fill_opacity=0.7,
-        popup=folium.Popup(popup_info, max_width=300)
-    ).add_to(m)
+# Callback to update the graph based on the selected state
+@app.callback(
+    Output('city-rating-graph', 'figure'),
+    [Input('state-dropdown', 'value')]
+)
+def update_graph(selected_state):
+    # Filter the DataFrame for the selected state
+    filtered_df = df[df['state'] == selected_state]
+    
+    # Create the scatter plot
+    fig = px.scatter(
+        filtered_df,
+        x='rating (stars)',
+        y='rating_count',
+        size='rating_count',  # Bubble size based on the number of reviews
+        hover_name='city',
+        title=f'Cities in {selected_state}',
+        labels={'rating (stars)': 'Average Rating (Stars)', 'rating_count': 'Average Count of Reviews'},
+        color='city'  # Different color per city
+    )
+    
+    # Update the layout
+    fig.update_layout(
+        xaxis_title='Average Rating (Stars)',
+        yaxis_title='Average Count of Reviews',
+        title=f'Cities in {selected_state}',
+        showlegend=False
+    )
+    
+    return fig
 
-plugins.MiniMap().add_to(m)
-
-m.save("mcdonalds_review.html")
+# Run the app
+if __name__ == '__main__':
+    app.run_server(debug=True)
