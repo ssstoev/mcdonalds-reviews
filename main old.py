@@ -4,14 +4,14 @@ from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
 
-df = pd.read_csv("state_city_sentiment.csv")
+df = pd.read_csv("pivoted_data.csv")
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
 # App layout
 app.layout = html.Div([
-    html.H1("Average Sentiment Score and Review Count by City"),
+    html.H1("Average Rating and Review Count by City"),
     
     # Dropdown for selecting the state
     dcc.Dropdown(
@@ -38,18 +38,18 @@ def update_graph(selected_state):
     # Create the scatter plot
     fig = px.scatter(
         filtered_df,
-        x='sentiment_score_mean',
-        y='rating_count_sum',
-        size='rating_count_sum',  # Bubble size based on the number of reviews
+        x='rating (stars)',
+        y='rating_count',
+        size='rating_count',  # Bubble size based on the number of reviews
         hover_name='city',
         title=f'Cities in {selected_state}',
-        labels={'sentiment_score_mean': 'Average Sentiment Score', 'rating_count_sum': 'Total Count of Reviews in City'},
+        labels={'rating (stars)': 'Average Rating (Stars)', 'rating_count': 'Average Count of Reviews in City'},
         color='city'  # Different color per city
     )
     
     # Update the layout
     fig.update_layout(
-        xaxis_title='Average Sentiment Score',
+        xaxis_title='Average Rating (Stars)',
         yaxis_title='Average Count of Reviews',
         title=f'Cities in {selected_state}',
         showlegend=False

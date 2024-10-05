@@ -1,0 +1,27 @@
+state,city,sentiment_score_mean,rating (stars)_mean,rating_count_mean,rating_count_sum
+CA,Los Angeles,0.1,2.81,2663.19,2753735
+CA,North Hollywood,0.18,3.38,1794.56,3068700
+CA,San Diego,0.15,3.17,886.68,1090620
+CA,Santa Monica,0.15,3.19,3380.28,2771830
+CA,Sunnyvale,0.17,3.33,1562.0,1249600
+DC,Washington,0.21,3.59,1270.2,867546
+FL,Fern Park,0.23,3.47,1617.67,2750040
+FL,Kissimmee,0.13,2.81,5566.55,9574470
+FL,Miami,-0.02,2.56,2809.45,4410840
+FL,Miami Beach,-0.21,1.97,4922.0,2805540
+FL,Orlando,0.15,2.89,6891.08,21293450
+IL,Oak Park,0.19,3.36,1454.0,1091954
+Las,3999 S Las Vegas Blvd,0.1,2.98,2365.0,2435950
+NJ,Newark,0.07,2.99,1564.15,2017750
+NJ,Voorhees Township,0.26,3.62,933.0,879819
+NY,Champlain,0.18,3.27,1306.02,809730
+NY,New York,0.17,3.31,2449.55,8539122
+NY,Queens,0.15,3.29,2193.0,2500020
+PA,Brodheadsville,0.21,3.46,1028.0,1056784
+TX,Austin,0.09,2.91,1329.06,2293956
+TX,Dallas,0.19,3.14,2657.69,4385190
+TX,Fort Worth,0.17,3.27,957.0,813450
+TX,Roanoke,0.24,3.47,998.15,1165834
+TX,San Antonio,0.16,3.13,1460.0,927100
+UT,Salt Lake City,0.05,2.53,3243.0,2886270
+VA,Annandale,0.26,3.7,595.0,358190
