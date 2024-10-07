@@ -1,4 +1,5 @@
 # mcdonalds-reviews
+![image](https://github.com/user-attachments/assets/497cd77a-2fd6-44ec-92ad-72efe7f753a9)
 
 An analysis on over 33k reviews of McDonald restaurants accross the US. It includes an interactive map of the stores where you can scroll to see them. Also it has a sentiment analysis of the text reviews.
 
