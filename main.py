@@ -1,7 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, dcc
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
 
@@ -36,11 +36,13 @@ app.layout = html.Div([
             ),
 
             dbc.Col(
-                    dcc.Dropdown(
+                    dcc.Dropdown(   
                     id='value-dropdown',
-                    options=[{'label': "Sentiment Score", 'value': "sentiment_score_mean"},
+                    options=[{'label': "Compound Sentiment Score", 'value': "compound_sentiment_mean"},
+                             {'label': "Positive Sentiment Score", 'value': "positive_sentiment_mean"},
+                             {'label': "Negative Sentiment Score", 'value': "negative_sentiment_mean"},
                              {'label': "AVG Review (Stars)", 'value': "rating (stars)_mean"}],
-                    value="sentiment_score_mean",  # Set default value
+                    value="compound_sentiment_mean",  # Set default value
                     clearable=False,
                     ), width = 3
             )
@@ -72,7 +74,9 @@ def update_graph(selected_state, selected_value):
 
     # Get the label for the selected value
     value_label = {
-        "sentiment_score_mean": "Sentiment Score",
+        "compound_sentiment_mean": "Compound Sentiment",
+        "positive_sentiment_mean": "Positive Sentiment",
+        "negative_sentiment_mean": "Negative Sentiment",
         "rating (stars)_mean": "Average Review (Stars)"
     }
     
